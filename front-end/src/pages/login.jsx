@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const regex = /\S+@\S+\.\S+/;
+  const minLengthPass = 5;
   return (
     <main>
       <form>
@@ -33,7 +36,7 @@ export default function Login() {
             className="loginBtn"
             type="submit"
             onClick=""
-            disabled=""
+            disabled={ !(password.length > minLengthPass && regex.test(email)) }
             data-testid="common_login__button-login"
           >
             Login
