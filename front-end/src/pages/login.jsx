@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { loginUser } from '../helpers/api';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const history = useHistory();
 
   const regex = /\S+@\S+\.\S+/;
   const minLengthPass = 5;
@@ -45,6 +47,7 @@ export default function Login() {
                   setErrorMessage(response.message);
                   return null;
                 }
+                history.push('/customer/products');
               }
             ) }
             disabled={ !(password.length > minLengthPass && regex.test(email)) }
