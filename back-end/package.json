@@ -1,5 +1,6 @@
 {
   "name": "delivery-app-back-end",
+  "type":"commonjs",
   "version": "0.1.0",
   "description": "Back-end do projeto App de Delivery",
   "main": "./src/api/server.js",
