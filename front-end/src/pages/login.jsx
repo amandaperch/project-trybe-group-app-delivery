@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { loginUser } from '../helpers/api';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const regex = /\S+@\S+\.\S+/;
   const minLengthPass = 5;
@@ -35,7 +37,16 @@ export default function Login() {
           <button
             className="loginBtn"
             type="submit"
-            onClick=""
+            onClick={ (
+              async (e) => {
+                e.preventDefault();
+                const response = await loginUser({ email, password });
+                if ('message' in response) {
+                  setErrorMessage(response.message);
+                  return null;
+                }
+              }
+            ) }
             disabled={ !(password.length > minLengthPass && regex.test(email)) }
             data-testid="common_login__button-login"
           >
@@ -52,9 +63,11 @@ export default function Login() {
           </button>
         </div>
       </form>
-      <p data-testid="common_login__element-invalid-email">
-        Elemento oculto (Mensagens de erro)
-      </p>
+      {errorMessage
+        && (
+          <p data-testid="common_login__element-invalid-email">
+            {errorMessage}
+          </p>)}
     </main>
 
   );
