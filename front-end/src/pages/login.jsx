@@ -14,7 +14,6 @@ export default function Login() {
     <main>
       <form>
         <div>
-          <h1>Oi, eu sou o form!</h1>
           <input
             className="inputLogin"
             placeholder="Email"
@@ -58,7 +57,7 @@ export default function Login() {
           <button
             className="loginBtn"
             type="submit"
-            onClick=""
+            onClick={ () => history.push('/register') }
             disabled=""
             data-testid="common_login__button-register"
           >
