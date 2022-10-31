@@ -4,6 +4,9 @@ export default function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const minLengthName = 11;
+  const minLengthPass = 5;
+  const regex = /\S+@\S+\.\S+/;
   return (
     <main>
       <form>
@@ -42,7 +45,8 @@ export default function Register() {
             className="loginBtn"
             type="submit"
             onClick=""
-            disabled=""
+            disabled={ !(name.length > minLengthName
+              && password.length > minLengthPass && regex.test(email)) }
             data-testid="common_register__button-register"
           >
             Cadastrar
