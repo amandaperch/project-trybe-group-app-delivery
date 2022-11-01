@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { createUser } from '../helpers/api';
 
 export default function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const history = useHistory();
   const minLengthName = 11;
   const minLengthPass = 5;
   const regex = /\S+@\S+\.\S+/;
@@ -44,7 +48,17 @@ export default function Register() {
           <button
             className="loginBtn"
             type="submit"
-            onClick=""
+            onClick={ (
+              async (e) => {
+                e.preventDefault();
+                const response = await createUser({ name, email, password });
+                if ('message' in response) {
+                  setErrorMessage(response.message);
+                  return null;
+                }
+                history.push('/customer/products');
+              }
+            ) }
             disabled={ !(name.length > minLengthName
               && password.length > minLengthPass && regex.test(email)) }
             data-testid="common_register__button-register"
@@ -53,11 +67,11 @@ export default function Register() {
           </button>
         </div>
       </form>
-      {/* {errorMessage
+      {errorMessage
         && (
           <p data-testid="common_register__element-invalid_register">
             {errorMessage}
-          </p>)} */}
+          </p>)}
     </main>
 
   );

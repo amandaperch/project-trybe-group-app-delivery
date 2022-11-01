@@ -7,4 +7,7 @@ const api = axios.create({
 export const loginUser = async ({ email, password }) => api
   .post('login', { email, password }).catch((error) => error.response.data);
 
+export const createUser = async ({ name, email, password }) => api
+  .post('register', { name, email, password }).catch((error) => error.response.data);
+
 export default api;
