@@ -15,6 +15,7 @@ export default function CardProduct() {
     }
     getCard();
   }, []);
+
   return (
     <div>
       {card.map((value) => (
@@ -32,10 +33,31 @@ export default function CardProduct() {
             {value.price}
           </p>
           <img
+            width="200px"
             src={ value.urlImage }
-            alt={ value.id }
+            alt={ value.name }
             data-testid={ `customer_products__img-card-bg-image-${value.id}` }
           />
+          <button
+            type="button"
+            data-testid={ `customer_products__button-card-add-item-${value.id}` }
+          >
+            Adicionar
+          </button>
+          <label htmlFor="qte">
+            <input
+              type="number"
+              name="qte"
+              id="qte"
+              data-testid={ `customer_products__input-card-quantity-${value.id}` }
+            />
+          </label>
+          <button
+            type="button"
+            data-testid={ `customer_products__button-card-rm-item-${value.id}` }
+          >
+            Remover
+          </button>
         </div>
       ))}
     </div>

@@ -4,9 +4,12 @@ import CardProduct from '../components/cardProduct';
 
 export default function Products() {
   return (
-    <main>
+    <>
       <NavBar />
-      <CardProduct />
-    </main>
+      <main>
+        <CardProduct />
+      </main>
+    </>
+
   );
 }

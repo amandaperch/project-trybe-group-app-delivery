@@ -5,15 +5,15 @@ export default function NavBar() {
   const name = 'nome';
   return (
     <header>
-      <div>
+      <nav>
         <Link
-          to="/customer/products" // alterar rota
+          to="/customer/products"
           data-testid="customer_products__element-navbar-link-products"
         >
           <h2> PRODUTOS </h2>
         </Link>
         <Link
-          to="/customer/orders" // alterar rota
+          to="/customer/orders"
           data-testid="customer_products__element-navbar-link-orders"
         >
           <h2> MEUS PEDIDOS </h2>
@@ -24,12 +24,12 @@ export default function NavBar() {
           { name }
         </p>
         <Link
-          to="/" // alterar rota
+          to="/"
           data-testid="customer_products__element-navbar-link-logout"
         >
           Sair
         </Link>
-      </div>
+      </nav>
     </header>
   );
 }

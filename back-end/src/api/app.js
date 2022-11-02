@@ -12,6 +12,6 @@ app.get('/coffee', (_req, res) => res.status(418).end());
 app.use('/', routerLogin);
 app.use(routerUser);
 app.use(routerProduct);
-app.use('/static', express.static('public')) 
+app.use(express.static('public'));
 
 module.exports = app;
