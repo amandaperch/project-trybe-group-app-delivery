@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const routerLogin = require('../routes/login.route');
 const routerUser = require('../routes/user.route');
-const routerProduct = require('../routes/products.route')
+const routerProduct = require('../routes/products.route');
 
 const app = express();
 app.use(express.json());
