@@ -4,6 +4,7 @@ import './App.css';
 import Login from './pages/login';
 import Products from './pages/products';
 import Register from './pages/register';
+import Checkout from './pages/checkout';
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
           <Redirect to="/login" />
         </Route>
         <Route path="/customer/products" component={ Products } />
+        <Route path="/customer/checkout" component={ Checkout } />
         <Route path="/register" component={ Register } />
       </Switch>
     </div>
