@@ -1,11 +1,15 @@
 import React from 'react';
+import NavBar from '../components/navbar';
+import CardProduct from '../components/cardProduct';
 
 export default function Products() {
   return (
-    <main>
-      <h1>
-        PRODUCTS
-      </h1>
-    </main>
+    <>
+      <NavBar />
+      <main>
+        <CardProduct />
+      </main>
+    </>
+
   );
 }

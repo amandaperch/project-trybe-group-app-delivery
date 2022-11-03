@@ -8,7 +8,7 @@ import Checkout from './pages/checkout';
 
 export default function App() {
   return (
-    <div className="App">
+    <div>
       <Switch>
         <Route path="/login" component={ Login } />
         <Route exact path="/">
