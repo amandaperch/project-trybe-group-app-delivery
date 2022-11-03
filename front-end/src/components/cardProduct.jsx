@@ -3,6 +3,7 @@ import api from '../helpers/api';
 
 export default function CardProduct() {
   const [card, setCard] = useState([]);
+  const [valuePrice, setValuePrice] = useState(0);
 
   useEffect(() => {
     async function getCard() {
@@ -49,6 +50,8 @@ export default function CardProduct() {
               type="number"
               name="qte"
               id="qte"
+              value={ valuePrice }
+              onChange={ ({ target: { v } }) => setValuePrice(v) }
               min={ 0 }
               data-testid={ `customer_products__input-card-quantity-${value.id}` }
             />
