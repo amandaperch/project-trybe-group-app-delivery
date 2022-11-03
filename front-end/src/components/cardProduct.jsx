@@ -30,7 +30,7 @@ export default function CardProduct() {
           <p
             data-testid={ `customer_products__element-card-price-${value.id}` }
           >
-            {value.price}
+            {value.price.replace(/\./, ',')}
           </p>
           <img
             width="200px"
@@ -49,6 +49,7 @@ export default function CardProduct() {
               type="number"
               name="qte"
               id="qte"
+              min={ 0 }
               data-testid={ `customer_products__input-card-quantity-${value.id}` }
             />
           </label>
