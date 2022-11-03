@@ -1,11 +1,22 @@
 const UserService = require('../services/user.service');
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+
+const secret = process.env.SECRET || 'chave'
 
 class UserController {
   static async createUser(req, res) {
     const data = await UserService.createUser(req.body);
+    const token = jwt.sign({ data: data}, secret)
     console.log('DATA', data);
     if ('code' in data) return res.status(data.code).json({ message: data.message });
-    return res.status(201).json({ message: 'Usuário cadastrado' });
+    return res.status(201).json(token);
+  }
+
+  static async getAll (req, res) {
+    const response = await UserService.getAllUser()
+    return res.status(200).json(response);
+
   }
 }
 

@@ -1,5 +1,4 @@
 const LoginService = require('../services/login.service');
-// import LoginToken from '../Utils/tokenGenerate';
 
 class LoginController {
   static async login(req, res) {
