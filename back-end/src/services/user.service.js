@@ -5,19 +5,13 @@ const { User } = require('../database/models');
 class UserService {
   static async getAll({ name, email }) {
     const user = await User.findAll({
-      where: {
-        [Op.or]: [
+       where: { 
+        [Op.or]:[ 
           { name },
-          { email },
-        ],
-      },
+          { email },], 
+      },},
+      {attributes: { exclude: ['password']}
     });
-
-    return user;
-  }
-
-  static async getAllUser() {
-    const user = await User.findAll({ where: {role: 'customer'}});
 
     return user;
   }
@@ -28,7 +22,7 @@ class UserService {
     if (existUser.length > 0) return { code: 409, message: 'Usuário já cadastrado' };
     const passwordHash = MD5(password);
     const createdUser = await User
-    .create({ name, email, password: passwordHash, role: 'customer' });
+    .create({ name, email, password: passwordHash, role: 'customer' || 'seller' || 'administrator'},);
     return createdUser;
   }
 }

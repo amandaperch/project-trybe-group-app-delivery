@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import jwt from 'jwt-decode';
 import { loginUser } from '../helpers/api';
 
 export default function Login() {
@@ -42,6 +43,10 @@ export default function Login() {
               async (e) => {
                 e.preventDefault();
                 const response = await loginUser({ email, password });
+                console.log('Response', response);
+                localStorage.setItem('user', JSON.stringify(response));
+                // const { data } = response;
+                // localStorage.setItem('user', JSON.stringify(data));
                 if ('message' in response) {
                   setErrorMessage(response.message);
                   return null;

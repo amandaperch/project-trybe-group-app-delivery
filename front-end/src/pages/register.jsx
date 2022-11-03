@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import jwt from 'jwt-decode';
 import { createUser } from '../helpers/api';
 
 export default function Register() {
@@ -52,6 +53,10 @@ export default function Register() {
               async (e) => {
                 e.preventDefault();
                 const response = await createUser({ name, email, password });
+                const user = jwt(response.data).data;
+                localStorage.setItem('user', JSON.stringify(user));
+                // const { data } = response;
+                // localStorage.setItem('user', JSON.stringify(data));
                 if ('message' in response) {
                   setErrorMessage(response.message);
                   return null;

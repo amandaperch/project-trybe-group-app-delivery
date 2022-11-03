@@ -2,7 +2,7 @@ const UserService = require('../services/user.service');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
 
-const secret = process.env.SECRET || 'chave'
+const secret = process.env.SECRET || 'secret'
 
 class UserController {
   static async createUser(req, res) {
@@ -13,11 +13,6 @@ class UserController {
     return res.status(201).json(token);
   }
 
-  static async getAll (req, res) {
-    const response = await UserService.getAllUser()
-    return res.status(200).json(response);
-
-  }
 }
 
 module.exports = UserController;
