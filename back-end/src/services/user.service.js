@@ -16,6 +16,12 @@ class UserService {
     return user;
   }
 
+  static async getAllUser() {
+    const user = await User.findAll({ where: {role: 'customer'}});
+
+    return user;
+  }
+
   static async createUser({ name, email, password }) {
     const existUser = await this.getAll({ name, email });
     console.log('existUser', existUser);
