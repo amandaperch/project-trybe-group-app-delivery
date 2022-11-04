@@ -1,10 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-// import api from '../helpers/api';
+import { Link, useHistory } from 'react-router-dom';
 
 export default function NavBar() {
   const user = localStorage.getItem('user');
   const parsed = JSON.parse(user);
+
+  const history = useHistory();
+
   return (
     <header>
       <nav>
@@ -25,12 +27,16 @@ export default function NavBar() {
         >
           { parsed.name }
         </p>
-        <Link
-          to="/"
+        <button
+          type="button"
           data-testid="customer_products__element-navbar-link-logout"
+          onClick={ () => {
+            localStorage.clear('user');
+            history.push('/');
+          } }
         >
           Sair
-        </Link>
+        </button>
       </nav>
     </header>
   );
