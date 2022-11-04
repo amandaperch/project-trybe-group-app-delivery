@@ -3,22 +3,8 @@ import { Link } from 'react-router-dom';
 // import api from '../helpers/api';
 
 export default function NavBar() {
-  // const [name, setName] = useState('');
-
-  // useEffect(() => {
-  //   async function getName() {
-  //     try {
-  //       const res = await api.get('/register');
-  //       setName(res.data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  //   getName();
-  // }, []);
-
-  // const user = JSON.parse(localStorage.getItem('user', name));
-
+  const user = localStorage.getItem('user');
+  const parsed = JSON.parse(user);
   return (
     <header>
       <nav>
@@ -37,7 +23,7 @@ export default function NavBar() {
         <p
           data-testid="customer_products__element-navbar-user-full-name"
         >
-          {/* { user } */}
+          { parsed.name }
         </p>
         <Link
           to="/"
