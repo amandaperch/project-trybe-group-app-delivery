@@ -4,6 +4,13 @@ import api from '../helpers/api';
 export default function CardProduct() {
   const [card, setCard] = useState([]);
   const [valuePrice, setValuePrice] = useState(0);
+  // const [quantity, setquantity] = useState(0);
+
+  // async function handleClick() {
+  //   async (e) => {
+  //     const add = quantity + 1;
+  //     localStorage.setItem('carrinho', JSON.stringify(add));
+  // }
 
   useEffect(() => {
     async function getCard() {
@@ -42,6 +49,10 @@ export default function CardProduct() {
           <button
             type="button"
             data-testid={ `customer_products__button-card-add-item-${value.id}` }
+            // onClick={ (e) => {
+            //   e.preventDefault();
+            //   handleClick();
+            // } }
           >
             Adicionar
           </button>

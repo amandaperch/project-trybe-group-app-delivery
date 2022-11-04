@@ -47,15 +47,6 @@ export default function Login() {
                   setErrorMessage(response.message);
                   return null;
                 }
-                // const localUser = localStorage.getItem('user');
-                // console.log('localUser', localUser);
-                // const userObject = JSON.parse(localUser);
-                // console.log('userToken', userObject);
-                // tokenUser(localStorage.getItem(userObject.token));
-                // if (!tokenUser || tokenUser === false) {
-                //   console.log(errorMessage);
-                //   return errorMessage;
-                // }
                 history.push('/customer/products');
               }
             ) }
