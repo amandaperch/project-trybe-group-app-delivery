@@ -41,14 +41,21 @@ export default function Login() {
               async (e) => {
                 e.preventDefault();
                 const response = await loginUser({ email, password });
+                console.log(response);
                 localStorage.setItem('user', JSON.stringify(response.data));
                 if ('message' in response) {
                   setErrorMessage(response.message);
                   return null;
                 }
                 const localUser = localStorage.getItem('user');
+                console.log('localUser', localUser);
                 const userToken = JSON.parse(localUser);
-                tokenUser(localStorage.getItem(userToken.newToken));
+                console.log('userToken', userToken);
+                tokenUser(localStorage.getItem(userToken.token));
+                if (!tokenUser || tokenUser === false) {
+                  console.log(errorMessage);
+                  return errorMessage;
+                }
                 history.push('/customer/products');
               }
             ) }

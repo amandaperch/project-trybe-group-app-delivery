@@ -10,7 +10,7 @@ export const loginUser = async ({ email, password }) => api
 export const createUser = async ({ name, email, password }) => api
   .post('register', { name, email, password }).catch((error) => error.response.data);
 
-export const tokenUser = async ({ token }) => api
+export const tokenUser = async (token) => api
   .post('token', { headers: { token } })
   .catch((error) => error.response.data);
 
