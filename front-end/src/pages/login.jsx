@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { loginUser } from '../helpers/api';
+import { loginUser, tokenUser } from '../helpers/api';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -24,7 +24,6 @@ export default function Login() {
             onChange={ ({ target: { value } }) => setEmail(value) }
             id="login_email"
           />
-
           <input
             className="inputLogin"
             placeholder="Password"
@@ -47,6 +46,9 @@ export default function Login() {
                   setErrorMessage(response.message);
                   return null;
                 }
+                const localUser = localStorage.getItem('user');
+                const userToken = JSON.parse(localUser);
+                tokenUser(localStorage.getItem(userToken.newToken));
                 history.push('/customer/products');
               }
             ) }
