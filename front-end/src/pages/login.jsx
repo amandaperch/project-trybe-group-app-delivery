@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { loginUser, tokenUser } from '../helpers/api';
+import { loginUser } from '../helpers/api';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -47,15 +47,15 @@ export default function Login() {
                   setErrorMessage(response.message);
                   return null;
                 }
-                const localUser = localStorage.getItem('user');
-                console.log('localUser', localUser);
-                const userToken = JSON.parse(localUser);
-                console.log('userToken', userToken);
-                tokenUser(localStorage.getItem(userToken.token));
-                if (!tokenUser || tokenUser === false) {
-                  console.log(errorMessage);
-                  return errorMessage;
-                }
+                // const localUser = localStorage.getItem('user');
+                // console.log('localUser', localUser);
+                // const userObject = JSON.parse(localUser);
+                // console.log('userToken', userObject);
+                // tokenUser(localStorage.getItem(userObject.token));
+                // if (!tokenUser || tokenUser === false) {
+                //   console.log(errorMessage);
+                //   return errorMessage;
+                // }
                 history.push('/customer/products');
               }
             ) }
