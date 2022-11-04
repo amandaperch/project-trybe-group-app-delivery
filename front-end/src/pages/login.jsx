@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import jwt from 'jwt-decode';
 import { loginUser } from '../helpers/api';
 
 export default function Login() {

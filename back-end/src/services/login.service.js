@@ -5,7 +5,10 @@ class LoginService {
    static async login(email, password) {
     const passwordEnc = MD5(password);
     console.log(passwordEnc);
-      const result = await User.findOne({ where: { email, password: passwordEnc }},{attributes: { exclude: ["password"]}})
+    const result = await User.findOne(
+      { where: { email, password: passwordEnc } },
+      { attributes: { exclude: ['password'] } },
+    );
     const { ...searchUser } = result;
     return searchUser;
   }
