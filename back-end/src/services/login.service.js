@@ -16,7 +16,7 @@ class LoginService {
     }
     const token = Token.create
       ({ name: user.name, email: user.email, role: user.role });
-    const userData = { name: user.name, email: user.email, role: user.role, token };
+    const userData = { id: user.id, name: user.name, email: user.email, role: user.role, token };
     return userData;
   }
 }
