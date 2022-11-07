@@ -2,7 +2,17 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 export default function CardProduct({ value }) {
-  const [valuePrice, setValuePrice] = useState(0);
+  const [quantity, setQuantity] = useState(0);
+
+  const addCart = () => {
+    const add = quantity + 1;
+    return setQuantity(add);
+  };
+
+  const removeCart = () => {
+    const remove = quantity > 0 ? quantity - 1 : 0;
+    return setQuantity(remove);
+  };
 
   return (
     <div>
@@ -29,15 +39,15 @@ export default function CardProduct({ value }) {
           <button
             type="button"
             data-testid={ `customer_products__button-card-rm-item-${value.id}` }
-            onClick={ () => setValuePrice(valuePrice > 0 ? valuePrice - 1 : 0) }
+            onClick={ removeCart }
           >
             -
           </button>
           <label htmlFor="qte">
             <input
               type="number"
-              value={ valuePrice }
-              onChange={ (({ target: { v } }) => setValuePrice(v)) }
+              value={ quantity }
+              onChange={ (({ target: { v } }) => setQuantity(v)) }
               min={ 0 }
               data-testid={ `customer_products__input-card-quantity-${value.id}` }
             />
@@ -45,7 +55,7 @@ export default function CardProduct({ value }) {
           <button
             type="button"
             data-testid={ `customer_products__button-card-add-item-${value.id}` }
-            onClick={ () => setValuePrice(valuePrice + 1) }
+            onClick={ addCart }
           >
             +
           </button>

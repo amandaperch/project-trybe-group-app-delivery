@@ -6,12 +6,16 @@ import api, { tokenUser } from '../helpers/api';
 
 export default function Products() {
   const [card, setCard] = useState([]);
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     async function getCard() {
       try {
         const res = await api.get('/products');
+        const newCart = res.data.map((product) => ({ quantity: 0, ...product }));
+        setCart(newCart);
         setCard(res.data);
+        localStorage.setItem('carrinho', JSON.stringify(res.data));
       } catch (error) {
         console.log(error);
       }
@@ -38,6 +42,13 @@ export default function Products() {
     getCard();
   }, []);
 
+  const totalCart = () => {
+    cart.forEach((quantity) => {
+      const cartTotal = quantity * cart.price;
+      return cartTotal;
+    });
+  };
+
   const history = useHistory();
 
   return (
@@ -53,7 +64,9 @@ export default function Products() {
         data-testid="customer_products__checkout-bottom-value"
         onClick={ () => history.push('/customer/checkout') }
       >
-        Ver Carrinho: valor do item mais price
+        `Ver Carrinho: R$
+        {totalCart}
+        `
       </button>
     </>
 
