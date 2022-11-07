@@ -9,6 +9,7 @@ class TokenController {
     } catch (error) {
       return res.status(403).json({ message: error.message });
     }
-}}
+}
+}
 
 module.exports = TokenController;
