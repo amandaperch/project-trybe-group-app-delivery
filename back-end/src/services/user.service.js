@@ -1,7 +1,7 @@
 const MD5 = require('md5');
 const { Op } = require('sequelize');
 const { User } = require('../database/models');
-const Token = require('../services/jwt.service');
+const Token = require('./jwt.service');
 
 class UserService {
   static async getAll({ name, email }) {
@@ -24,12 +24,12 @@ class UserService {
     const passwordHash = MD5(password);
     const user = await User
     .create({ name, email, password: passwordHash, role: 'customer' });
-    const newToken = Token.create({id: user.id, name: user.name, email: user.email, role: user.role});
-    const userData = {id: user.id, name: user.name, email: user.email, role: user.role, newToken};
+    const newToken = Token
+     .create({ id: user.id, name: user.name, email: user.email, role: user.role });
+    const userData = { id: user.id, name: user.name, email: user.email, role: user.role, newToken };
     console.log('USER:', user);
     return userData;
   }
-  
 }
 
 module.exports = UserService;

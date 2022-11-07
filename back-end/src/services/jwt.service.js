@@ -1,9 +1,9 @@
 require('dotenv/config');
 const jwt = require('jsonwebtoken');
-const fs = require('fs')
+const fs = require('fs');
 
-const secret = fs.readFileSync(__dirname + '/../../jwt.evaluation.key').toString()
-console.log(secret)
+const secret = fs.readFileSync(`${__dirname}/../../jwt.evaluation.key`).toString();
+console.log(secret);
 
 const token = {
   create(userData) {
