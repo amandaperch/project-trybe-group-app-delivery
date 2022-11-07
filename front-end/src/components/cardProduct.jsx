@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useHistory } from 'react';
 import api from '../helpers/api';
 
 export default function CardProduct() {
@@ -11,6 +11,8 @@ export default function CardProduct() {
   //     const add = quantity + 1;
   //     localStorage.setItem('carrinho', JSON.stringify(add));
   // }
+
+  const history = useHistory();
 
   useEffect(() => {
     async function getCard() {
@@ -72,6 +74,13 @@ export default function CardProduct() {
             data-testid={ `customer_products__button-card-rm-item-${value.id}` }
           >
             Remover
+          </button>
+          <button
+            type="button"
+            data-testid="customer_products__checkout-bottom-value"
+            onClick={ () => history.push('/customer/checkout') }
+          >
+            Ver Carrinho
           </button>
         </div>
       ))}
