@@ -8,6 +8,8 @@ export default function Products() {
   const [card, setCard] = useState([]);
   // const [subtotalCart, setSubtotalCart] = useState(0);
   const [localStorangeCart, setLocalStorangeCart] = useState([]);
+  const [cartState, setCartState] = useState([]);
+
   useEffect(() => {
     async function getCard() {
       try {
@@ -19,6 +21,7 @@ export default function Products() {
     }
     getCard();
   }, []);
+
   useEffect(() => {
     async function getCard() {
       try {
@@ -37,10 +40,9 @@ export default function Products() {
     }
     getCard();
   }, []);
+
   const history = useHistory();
-  // const localStorageCart = JSON.parse(localStorage.getItem('carrinho'));
-  // const totalPrice = localStorangeCart
-  //   .reduce((acc, curr) => (acc) + (curr.quantity * curr.subTotal), 0);
+
   useEffect(() => {
     async function localStorangeExists() {
       try {
@@ -56,6 +58,17 @@ export default function Products() {
     localStorangeExists();
   }, []);
   console.log(localStorangeCart);
+
+  function allPrice() {
+    const totalPrice = cartState
+      .reduce((acc, curr) => (acc) + (curr.subTotal), 0);
+    return totalPrice;
+  }
+
+  // const localStorageCart = JSON.parse(localStorage.getItem('carrinho'));
+  // const totalPrice = localStorangeCart
+  //   .reduce((acc, curr) => (acc) + (curr.quantity * curr.subTotal), 0);
+
   return (
     <>
       <NavBar />
@@ -64,16 +77,18 @@ export default function Products() {
           <CardProduct
             key={ value.id }
             value={ value }
+            state={ [cartState, setCartState] }
           />
         ))}
       </main>
       <button
         type="button"
         onClick={ () => history.push('/customer/checkout') }
-        // disabled={ totalPrice === 0 }
+        disabled={ allPrice() === 0 }
+        data-testid="customer_products__button-cart"
       >
         <p data-testid="customer_products__checkout-bottom-value">
-          Ver Carrinho:
+          {allPrice().toFixed(2).replace(/\./, ',')}
         </p>
       </button>
     </>

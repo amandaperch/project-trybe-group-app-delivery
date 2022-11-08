@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-export default function CardProduct({ value }) {
+export default function CardProduct({ value, state }) {
   const [quantity, setQuantity] = useState(0);
-  const [localStorangeCart, setLocalStorangeCart] = useState([]);
   const { id, name, price } = value;
+  const [cartState, setCartState] = state;
+
   useEffect(() => {
     async function localStorangeExists() {
       try {
@@ -19,14 +20,14 @@ export default function CardProduct({ value }) {
     }
     localStorangeExists();
   }, []);
+
   const remove = () => {
     setQuantity((prev) => {
       if (prev > 0) return prev - 1;
       return prev;
     });
-    const cart = JSON.parse(localStorage.getItem('carrinho'));
-    if (cart.find((item) => item.id === id)) {
-      const newCart = cart.map((item) => {
+    if (cartState.find((item) => item.id === id)) {
+      const newCart = cartState.map((item) => {
         if (item.id === id && item.quantity > 0) {
           return { ...item,
             quantity: item.quantity - 1,
@@ -35,13 +36,16 @@ export default function CardProduct({ value }) {
         return item;
       });
       localStorage.setItem('carrinho', JSON.stringify(newCart));
+      setCartState(newCart);
     }
   };
+
   const addToCart = () => {
     const cart = JSON.parse(localStorage.getItem('carrinho')) || [];
     const product = { id, name, price, quantity: 1, subTotal: Number(price) };
-    if (cart.find((item) => item.id === id)) {
-      const newCart = cart.map((item) => {
+    console.log('cartstate', cartState);
+    if (cartState.find((item) => item.id === id)) {
+      const newCart = cartState.map((item) => {
         if (item.id === id) {
           return { ...item,
             quantity: Number(item.quantity) + 1,
@@ -50,22 +54,26 @@ export default function CardProduct({ value }) {
         return item;
       });
       localStorage.setItem('carrinho', JSON
-        .stringify(newCart), localStorangeCart
-        .push(newCart));
+        .stringify(newCart));
+      setCartState(newCart);
+      console.log(newCart);
     } else {
-      cart.push(product);
+      setCartState([...cartState, product]);
       localStorage.setItem('carrinho', JSON.stringify(cart));
+      // setLocalStorangeCart(cart);
     }
   };
-  const handleQuantity = ({ target }) => {
-    setQuantity(target.value);
-    const product = { id, name, price, subTotal: Number(price) };
-    const itemThere = product.some((item) => item.id === id);
-    if (itemThere) {
-      const newCart = product.filter((item) => item.id !== id);
-      localStorage.setItem('carrinho', newCart);
-    }
-  };
+
+  // const handleQuantity = ({ target }) => {
+  //   setQuantity(target.value);
+  //   const product = { id, name, price, subTotal: Number(price) };
+  //   const itemThere = product.some((item) => item.id === id);
+  //   if (itemThere) {
+  //     const newCart = cartState.filter((item) => item.id !== id);
+  //     setCartState(newCart);
+  //   }
+  // };
+
   return (
     <div>
       <div>
@@ -97,7 +105,7 @@ export default function CardProduct({ value }) {
             <input
               type="number"
               value={ quantity }
-              onChange={ (e) => handleQuantity(e) }
+              onChange={ () => { setQuantity((prev) => Number(prev) + 1); addToCart(); } }
               min={ 0 }
               data-testid={ `customer_products__input-card-quantity-${value.id}` }
             />
@@ -114,6 +122,7 @@ export default function CardProduct({ value }) {
     </div>
   );
 }
+
 CardProduct.propTypes = {
   value: PropTypes.shape({
     id: PropTypes.number,
@@ -121,5 +130,9 @@ CardProduct.propTypes = {
     price: PropTypes.string,
     urlImage: PropTypes.string,
     setSubtotalCart: PropTypes.number,
+  }).isRequired,
+  state: PropTypes.shape({
+    cartState: PropTypes.arrayOf(PropTypes.shape({})),
+    setCartState: PropTypes.func,
   }).isRequired,
 };
