@@ -6,23 +6,19 @@ import api, { tokenUser } from '../helpers/api';
 
 export default function Products() {
   const [card, setCard] = useState([]);
-  const [cart, setCart] = useState([]);
-
+  // const [subtotalCart, setSubtotalCart] = useState(0);
+  const [localStorangeCart, setLocalStorangeCart] = useState([]);
   useEffect(() => {
     async function getCard() {
       try {
         const res = await api.get('/products');
-        const newCart = res.data.map((product) => ({ quantity: 0, ...product }));
-        setCart(newCart);
         setCard(res.data);
-        localStorage.setItem('carrinho', JSON.stringify(res.data));
       } catch (error) {
         console.log(error);
       }
     }
     getCard();
   }, []);
-
   useEffect(() => {
     async function getCard() {
       try {
@@ -41,34 +37,45 @@ export default function Products() {
     }
     getCard();
   }, []);
-
-  const totalCart = () => {
-    cart.forEach((quantity) => {
-      const cartTotal = quantity * cart.price;
-      return cartTotal;
-    });
-  };
-
   const history = useHistory();
-
+  // const localStorageCart = JSON.parse(localStorage.getItem('carrinho'));
+  // const totalPrice = localStorangeCart
+  //   .reduce((acc, curr) => (acc) + (curr.quantity * curr.subTotal), 0);
+  useEffect(() => {
+    async function localStorangeExists() {
+      try {
+        if (localStorage.getItem('carrinho') === null) {
+          localStorage.setItem('carrinho', JSON.stringify([]));
+        } else {
+          setLocalStorangeCart(JSON.parse(localStorage.getItem('carrinho')));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    localStorangeExists();
+  }, []);
+  console.log(localStorangeCart);
   return (
     <>
       <NavBar />
       <main>
         {card.map((value) => (
-          <CardProduct key={ value.id } value={ value } />
+          <CardProduct
+            key={ value.id }
+            value={ value }
+          />
         ))}
       </main>
       <button
         type="button"
-        data-testid="customer_products__checkout-bottom-value"
         onClick={ () => history.push('/customer/checkout') }
+        // disabled={ totalPrice === 0 }
       >
-        `Ver Carrinho: R$
-        {totalCart}
-        `
+        <p data-testid="customer_products__checkout-bottom-value">
+          Ver Carrinho:
+        </p>
       </button>
     </>
-
   );
 }
