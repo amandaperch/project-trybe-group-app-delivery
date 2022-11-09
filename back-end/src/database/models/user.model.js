@@ -6,18 +6,13 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    role: DataTypes.STRING,
+    role: {type: DataTypes.STRING, defaultValue: 'customer'}
   },
   {
     timestamps: false, // remove a obrigatoriedade de utilizar os campos `createdAt` e `updatedAt`
     tableName: 'users',
     underscored: false,
   });
-
-  // Employee.associate = (models) => {
-  //   Employee.hasOne(models.Address,
-  //     { foreignKey: 'employeeId', as: 'addresses' });
-  // };
 
   return User;
 };
