@@ -9,10 +9,10 @@ module.exports = {
         type: Sequelize.DECIMAL,
         field: 'total_price'
       },
-      deliveryAdress: {
+      deliveryAddress: {
         allowNull: false,
         type: Sequelize.STRING,
-        field: 'delivery_adress'
+        field: 'delivery_address'
       },
       deliveryNumber: {
         allowNull: false,
