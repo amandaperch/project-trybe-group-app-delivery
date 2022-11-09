@@ -17,7 +17,6 @@ function CheckoutProvider({ children }) {
       }
     }
     getCart();
-    console.log('Item List no use do Provider', itemsList);
   }, []);
 
   const total = itemsList.reduce((acc, item) => {
