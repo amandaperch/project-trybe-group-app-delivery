@@ -13,4 +13,15 @@ export const createUser = async ({ name, email, password }) => api
 export const getAllSellers = async () => api
   .get('sellers').catch((error) => error.response.data);
 
+export const createSale = async ({ totalPrice, deliveryAddress, deliveryNumber, saleDate,
+  userId, sellerId, itemsList,
+
+}) => api.post('sale', { totalPrice,
+  deliveryAddress,
+  deliveryNumber,
+  saleDate,
+  userId,
+  sellerId,
+  itemsList }, {}).catch((error) => error.response.data);
+
 export default api;
