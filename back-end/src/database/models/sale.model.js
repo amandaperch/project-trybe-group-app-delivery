@@ -4,10 +4,10 @@ module.exports = (sequelize, DataTypes) => {
   const Sale = sequelize.define('Sale', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     totalPrice: DataTypes.DECIMAL(9, 2),
-    deliveryAdress: DataTypes.STRING(100),
+    deliveryAddress: DataTypes.STRING(100),
     deliveryNumber: DataTypes.STRING(50),
-    saleDate: DataTypes.DATE,
-    status: DataTypes.STRING(50),
+    saleDate: {type: DataTypes.DATE, defaultValue: Date()},
+    status: {type: DataTypes.STRING(50), defaultValue: 'pendente'},
     userId: { type: DataTypes.INTEGER, foreignKey: true },
     sellerId: { type: DataTypes.INTEGER, foreignKey: true },
   },
