@@ -21,8 +21,8 @@ function CheckoutProvider({ children }) {
   }, []);
 
   const total = itemsList.reduce((acc, item) => {
-    const total = acc + (item.quantity * item.value);
-    return total;
+    const sumTotal = acc + (item.quantity * item.value);
+    return sumTotal;
   }, 0);
 
   const totalPrice = total.toFixed(2);
