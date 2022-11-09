@@ -10,7 +10,6 @@ export const loginUser = async ({ email, password }) => api
 export const createUser = async ({ name, email, password }) => api
   .post('register', { name, email, password }).catch((error) => error.response.data);
 
-
 export const getAllSellers = async () => api
   .get('sellers').catch((error) => error.response.data);
 
