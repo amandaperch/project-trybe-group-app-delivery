@@ -27,6 +27,7 @@ class UserService {
       id: user.id, name: user.name, email: user.email, role: user.role,
     });
     const userData = { id: user.id, name: user.name, email: user.email, role: user.role, newToken };
+
     return userData;
   }
 }

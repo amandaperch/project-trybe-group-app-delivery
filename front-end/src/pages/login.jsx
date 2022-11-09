@@ -24,7 +24,6 @@ export default function Login() {
             onChange={ ({ target: { value } }) => setEmail(value) }
             id="login_email"
           />
-
           <input
             className="inputLogin"
             placeholder="Password"
@@ -44,6 +43,7 @@ export default function Login() {
                 const response = await loginUser({ email, password });
                 const { data } = response;
                 console.log('RESPONSE.DATA', data);
+                localStorage.setItem('user', JSON.stringify(data));
                 if ('message' in response) {
                   setErrorMessage(response.message);
                   return null;

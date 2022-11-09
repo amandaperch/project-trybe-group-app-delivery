@@ -11,12 +11,12 @@ class LoginService {
       raw: false,
     },
 );
-    const newToken = Token.create({ id: user.id,
-name: user.name, 
-      email: user.email,
-role: user.role });
-    const userData = { id: user.id, name: user.name, email: user.email, role: user.role, newToken };
     console.log('USER:', user);
+    if (!user) {
+      return { code: 404, message: 'Usuario não encontrado' };
+    }
+    const token = Token.create({ name: user.name, email: user.email, role: user.role });
+    const userData = { id: user.id, name: user.name, email: user.email, role: user.role, token };
     return userData;
   }
 }

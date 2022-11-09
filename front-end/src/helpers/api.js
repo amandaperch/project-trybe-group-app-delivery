@@ -10,6 +10,7 @@ export const loginUser = async ({ email, password }) => api
 export const createUser = async ({ name, email, password }) => api
   .post('register', { name, email, password }).catch((error) => error.response.data);
 
+
 export const getAllSellers = async () => api
   .get('sellers').catch((error) => error.response.data);
 
@@ -22,5 +23,9 @@ export const createSale = async ({ totalPrice, deliveryAddress, deliveryNumber,
   userId,
   sellerId,
   itemsList }, {}).catch((error) => error.response.data);
+
+export const tokenUser = async (token) => api
+  .post('token', {}, { headers: { Authorization: token } })
+  .catch((error) => error.response.data);
 
 export default api;
