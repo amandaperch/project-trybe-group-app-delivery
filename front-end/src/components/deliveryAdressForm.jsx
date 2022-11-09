@@ -5,9 +5,9 @@ import { getAllSellers, createSale } from '../helpers/api';
 
 export default function DeliveryAdressForm() {
   const { itemsList, totalPrice } = useContext(CheckoutContext);
-  const history = useHistory;
+  const history = useHistory();
   const [deliveryAddress, setDeliveryAddress] = useState('');
-  const [addressNumber, setAddressNumber] = useState('');
+  const [deliveryNumber, setDeliveryNumber] = useState('');
   const [sellers, setSellers] = useState([]);
   const [user, setUser] = useState({});
   const [selectedSeller, setSelectedSeller] = useState('');
@@ -28,7 +28,6 @@ export default function DeliveryAdressForm() {
     async function getSellerName() {
       try {
         const { data } = await getAllSellers();
-        console.log('DATA: ', data[0].name);
         setSellers(data);
         setSelectedSeller(data[0].id);
       } catch (error) {
@@ -38,7 +37,10 @@ export default function DeliveryAdressForm() {
     getSellerName();
     getUser();
   }, []);
-
+  console.log('USER: ', user.id);
+  if (user.id === '') {
+    return null;
+  }
   return (
     <div>
       <h3>Detalhes e Endereço para Entrega</h3>
@@ -80,8 +82,8 @@ export default function DeliveryAdressForm() {
             data-testid="customer_checkout__input-address-number"
             type="text"
             name="address-number"
-            value={ addressNumber }
-            onChange={ ({ target: { value } }) => setAddressNumber(value) }
+            value={ deliveryNumber }
+            onChange={ ({ target: { value } }) => setDeliveryNumber(value) }
             id="numberAddress"
           />
         </label>
@@ -95,9 +97,7 @@ export default function DeliveryAdressForm() {
               e.preventDefault();
               const response = await createSale({ totalPrice,
                 deliveryAddress,
-                addressNumber,
-                saleDate: Date(),
-                status: 'pendente',
+                deliveryNumber,
                 userId: user.id,
                 sellerId: selectedSeller,
                 itemsList });

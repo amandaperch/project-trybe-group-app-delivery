@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
     totalPrice: DataTypes.DECIMAL(9, 2),
     deliveryAddress: DataTypes.STRING(100),
     deliveryNumber: DataTypes.STRING(50),
-    saleDate: {type: DataTypes.DATE, defaultValue: Date()},
+    saleDate: {type: DataTypes.DATE, defaultValue: new Date().toISOString()},
     status: {type: DataTypes.STRING(50), defaultValue: 'pendente'},
     userId: { type: DataTypes.INTEGER, foreignKey: true },
     sellerId: { type: DataTypes.INTEGER, foreignKey: true },

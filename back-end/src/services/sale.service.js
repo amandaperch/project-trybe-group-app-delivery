@@ -1,14 +1,11 @@
 const { Sale } = require('../database/models');
 
 class SaleService {
-  static async create({ totalPrice, deliveryAddress, deliveryNumber,
-    saleDate, status, useId, sellerId }) {
+  static async create({ totalPrice, deliveryAddress, deliveryNumber, userId, sellerId }) {
     const sale = await Sale.create({ totalPrice,
 deliveryAddress,
 deliveryNumber,
-      saleDate,
-status,
-useId,
+userId,
 sellerId,
 });
     return sale;

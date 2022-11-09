@@ -2,15 +2,18 @@ const { SaleProduct, sequelize } = require('../database/models');
 const Sale = require('./sale.service');
 
 class saleProductService {
-   static async insert({ totalPrice, deliveryAddress, addressNumber, saleDate,
-    status, userId, sellerId, itemsList }) {
+   static async insert({ totalPrice, deliveryAddress, deliveryNumber,
+    userId, sellerId, itemsList }) {
       try {
+        console.log('USERID NA SERVICE:', userId);
       const result = await sequelize.transaction(async (t) => {
-        const sale = Sale.create({ 
-          totalPrice, deliveryAddress, addressNumber, saleDate, status, userId, sellerId,
+        const sale = await Sale.create({ 
+          totalPrice, deliveryAddress, deliveryNumber, userId, sellerId,
           }, { transaction: t });
+          console.log('SALE', sale);
       const productsList = itemsList.map((product) => ({ 
         saleId: sale.id, productId: product.id, quantity: product.quantity }));
+        console.log('ProductList: ', productsList);
       await SaleProduct.bulkCreate(productsList, { transaction: t });
           return sale;
       });

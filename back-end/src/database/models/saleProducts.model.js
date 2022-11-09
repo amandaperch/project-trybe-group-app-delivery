@@ -5,7 +5,13 @@ module.exports = (sequelize, DataTypes) => {
       quantity: {
         allowNull: false,
         type: DataTypes.INTEGER
-      }
+      },
+      saleId: {
+        type: DataTypes.INTEGER
+    },
+      productId: {
+        type: DataTypes.INTEGER
+      },
     },
     {
       timestamps: false,
