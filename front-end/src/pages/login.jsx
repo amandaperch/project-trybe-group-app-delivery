@@ -42,6 +42,8 @@ export default function Login() {
               async (e) => {
                 e.preventDefault();
                 const response = await loginUser({ email, password });
+                const { data } = response;
+                console.log('RESPONSE.DATA', data);
                 if ('message' in response) {
                   setErrorMessage(response.message);
                   return null;
