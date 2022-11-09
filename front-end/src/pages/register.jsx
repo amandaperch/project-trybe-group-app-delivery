@@ -52,6 +52,7 @@ export default function Register() {
               async (e) => {
                 e.preventDefault();
                 const response = await createUser({ name, email, password });
+                localStorage.setItem('user', JSON.stringify(response.data));
                 if ('message' in response) {
                   setErrorMessage(response.message);
                   return null;

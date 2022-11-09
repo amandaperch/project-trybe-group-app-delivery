@@ -1,6 +1,7 @@
 const MD5 = require('md5');
 const { Op } = require('sequelize');
 const { User } = require('../database/models');
+const Token = require('./jwt.service');
 
 class UserService {
   static async getAll({ name, email }) {
@@ -21,9 +22,13 @@ class UserService {
     console.log('existUser', existUser);
     if (existUser.length > 0) return { code: 409, message: 'Usuário já cadastrado' };
     const passwordHash = MD5(password);
-    const createdUser = await User
+    const user = await User
     .create({ name, email, password: passwordHash, role: 'customer' });
-    return createdUser;
+    const newToken = Token
+     .create({ id: user.id, name: user.name, email: user.email, role: user.role });
+    const userData = { id: user.id, name: user.name, email: user.email, role: user.role, newToken };
+    console.log('USER:', user);
+    return userData;
   }
 }
 

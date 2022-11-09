@@ -24,7 +24,6 @@ export default function Login() {
             onChange={ ({ target: { value } }) => setEmail(value) }
             id="login_email"
           />
-
           <input
             className="inputLogin"
             placeholder="Password"
@@ -42,6 +41,7 @@ export default function Login() {
               async (e) => {
                 e.preventDefault();
                 const response = await loginUser({ email, password });
+                localStorage.setItem('user', JSON.stringify(response.data));
                 if ('message' in response) {
                   setErrorMessage(response.message);
                   return null;
