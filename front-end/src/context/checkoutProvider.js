@@ -4,6 +4,13 @@ import CheckoutContext from './checkoutContext';
 
 function CheckoutProvider({ children }) {
   const [itemsList, setItemsList] = useState([]);
+
+  const removeItem = (id) => {
+    const newListItem = itemsList.filter((item) => item.id !== id);
+    localStorage.setItem('carrinho', JSON.stringify(newListItem));
+    setItemsList(newListItem);
+  };
+
   useEffect(() => {
     async function getCart() {
       try {
@@ -20,7 +27,7 @@ function CheckoutProvider({ children }) {
   }, []);
 
   const total = itemsList.reduce((acc, item) => {
-    const sumTotal = acc + (item.quantity * item.value);
+    const sumTotal = acc + (item.quantity * item.price);
     return sumTotal;
   }, 0);
 
@@ -32,6 +39,7 @@ function CheckoutProvider({ children }) {
   const contextValue = useMemo(() => ({
     itemsList,
     totalPrice,
+    removeItem,
   }), [itemsList, totalPrice]);
 
   return (

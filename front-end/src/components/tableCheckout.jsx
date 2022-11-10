@@ -2,16 +2,14 @@ import React, { useContext } from 'react';
 import CheckoutContext from '../context/checkoutContext';
 
 export default function TableCheckout() {
-  const { itemsList, totalPrice } = useContext(CheckoutContext);
+  const { itemsList, totalPrice, removeItem } = useContext(CheckoutContext);
   const tableTitles = ['Item', 'Descrição', 'Quantidade',
     'Valor Unitário', 'Sub-total', 'Remover Item'];
-  // if (itemsList.length === 0) {
-  //   return null;
-  // }
+
   console.log('ITEM LIST NO TABLE: ', itemsList);
   console.log('TOTAL PRICE NA TABLE: ', totalPrice);
   return (
-    itemsList.length < 1 ? '...Carregando'
+    itemsList.length < 1 ? (<p>CARRINHO VAZIO</p>)
       : (
         <div>
           <table>
@@ -51,7 +49,7 @@ export default function TableCheckout() {
                     `customer_checkout__element-order-table-unit-price-${index}`
                   }
                 >
-                  {Number(item.value).toFixed(2)}
+                  { (Number(item.price).toFixed(2)).replace(/\./, ',') }
 
                 </td>
                 <td
@@ -59,7 +57,7 @@ export default function TableCheckout() {
                     `customer_checkout__element-order-table-sub-total-${index}`
                   }
                 >
-                  {item.quantity * item.value}
+                  { ((item.quantity * item.price).toFixed(2)).replace(/\./, ',') }
 
                 </td>
                 <td
@@ -67,7 +65,7 @@ export default function TableCheckout() {
                 >
                   <button
                     type="button"
-                    onClick=""
+                    onClick={ () => removeItem(item.id) }
                     data-testid="delete-btn"
                   >
                     Remover
@@ -79,7 +77,7 @@ export default function TableCheckout() {
           <p data-testid="customer_checkout__element-order-total-price">
             Total:
             {' '}
-            <span>{totalPrice}</span>
+            <span>{ totalPrice.replace(/\./, ',') }</span>
           </p>
         </div>
       )
