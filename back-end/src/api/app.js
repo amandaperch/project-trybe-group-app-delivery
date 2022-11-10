@@ -6,6 +6,7 @@ const routerSeller = require('../routes/seller.route');
 const routerProduct = require('../routes/products.route');
 const routerSale = require('../routes/salesProducts.route');
 const routerToken = require('../routes/token.route');
+const routerSaleAll = require('../routes/sale.router');
 
 const app = express();
 app.use(express.json());
@@ -17,6 +18,7 @@ app.use(routerUser);
 app.use(routerSeller);
 app.use(routerProduct);
 app.use(routerSale);
+app.use(routerSaleAll);
 app.use(express.static('public'));
 app.use(routerToken);
 
