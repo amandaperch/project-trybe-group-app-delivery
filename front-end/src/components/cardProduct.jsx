@@ -41,7 +41,7 @@ export default function CardProduct({ value, state }) {
   };
 
   const addToCart = () => {
-    const cart = JSON.parse(localStorage.getItem('carrinho')) || [];
+    // const cart = JSON.parse(localStorage.getItem('carrinho')) || [];
     const product = { id, name, price, quantity: 1, subTotal: Number(price) };
     console.log('cartstate', cartState);
     if (cartState.find((item) => item.id === id)) {
@@ -59,7 +59,7 @@ export default function CardProduct({ value, state }) {
       console.log(newCart);
     } else {
       setCartState([...cartState, product]);
-      localStorage.setItem('carrinho', JSON.stringify(cart));
+      localStorage.setItem('carrinho', JSON.stringify([...cartState, product]));
       // setLocalStorangeCart(cart);
     }
   };
