@@ -1,5 +1,7 @@
 // src/models/employee.model.js
 
+const { models } = require("mongoose");
+
 module.exports = (sequelize, DataTypes) => {
   const dateObj = new Date();
   const day = dateObj.getUTCDate();
@@ -7,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
   const year = dateObj.getUTCFullYear();
   const fullDate = `${day}/${month}/${year}`;
   console.log('FULLDATE', fullDate);
+  // const date = new Date(Date.UTC(2012, 11, 12, 3, 0, 0));
   const Sale = sequelize.define('Sale', {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     totalPrice: DataTypes.DECIMAL(9, 2),
@@ -31,6 +34,6 @@ module.exports = (sequelize, DataTypes) => {
     Sale.belongsTo(models.User,
       { foreignKey: 'sellerId', as: 'sellers' });
   };
-
+  
   return Sale;
 };

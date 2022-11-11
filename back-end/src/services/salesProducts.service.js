@@ -1,4 +1,4 @@
-const { SaleProduct, sequelize } = require('../database/models');
+const { SaleProduct, Product, sequelize } = require('../database/models');
 const Sale = require('./sale.service');
 
 class saleProductService {
@@ -20,6 +20,16 @@ class saleProductService {
       return { code: 500, message: error.message };
     }
   }
+
+  static async getByPk(id) {
+   const sale = SaleProduct.findByPk(id, {
+    include: [{ model: Product, as: 'products' }],
+   });
+   if (!sale) {
+    return { code: 404, message: 'Pedido não encontrado' };
+  }
+  return sale;
+}
 }
 
 module.exports = saleProductService;

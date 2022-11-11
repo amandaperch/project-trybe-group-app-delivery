@@ -14,8 +14,11 @@ const token = {
   return code;
   },
   validate(userToken) {
-    const data = jwt.verify(userToken, secret);
-    return data;
+    try {
+      return jwt.verify(userToken, secret);
+    } catch (_err) {
+      return { code: 401, message: 'Token Inválido' };
+    }
   },
 };
 

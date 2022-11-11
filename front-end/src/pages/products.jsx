@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import NavBar from '../components/navbar';
 import CardProduct from '../components/cardProduct';
-import api, { tokenUser } from '../helpers/api';
+import api from '../helpers/api';
 
 export default function Products() {
   const [card, setCard] = useState([]);
@@ -30,10 +30,10 @@ export default function Products() {
         const userObject = JSON.parse(localUser);
         console.log('userToken', userObject);
         tokenUser(localStorage.getItem(userObject.token));
-        if (!tokenUser || tokenUser === false) {
-          console.log(errorMessage);
-          return errorMessage;
-        }
+        // if (!tokenUser || tokenUser === false) {
+        //   console.log(errorMessage);
+        //   return errorMessage;
+        // }
       } catch (error) {
         console.log(error);
       }

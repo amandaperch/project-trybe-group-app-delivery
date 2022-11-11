@@ -100,14 +100,15 @@ export default function DeliveryAdressForm() {
                 deliveryNumber,
                 userId: user.id,
                 sellerId: selectedSeller,
-                itemsList });
+                itemsList,
+                token: user.token });
               const { data } = response;
-              console.log('RESPONSE.DATA', data);
+              console.log('RESPONSE.DATA', data.data);
               if ('message' in response) {
                 setErrorMessage(response.message);
                 return null;
               }
-              history.push('/customer/orders');
+              history.push(`/customer/orders/${data.data.id}`);
             }
           ) }
         >

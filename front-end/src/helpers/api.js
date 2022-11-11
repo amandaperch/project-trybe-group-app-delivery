@@ -14,17 +14,18 @@ export const getAllSellers = async () => api
   .get('sellers').catch((error) => error.response.data);
 
 export const createSale = async ({ totalPrice, deliveryAddress, deliveryNumber,
-  userId, sellerId, itemsList,
+  userId, sellerId, itemsList, token,
 
 }) => api.post('sale', { totalPrice,
   deliveryAddress,
   deliveryNumber,
   userId,
   sellerId,
-  itemsList }, {}).catch((error) => error.response.data);
+  itemsList }, { headers: { Authorization: token } })
+  .catch((error) => error.response.data);
 
-export const tokenUser = async (token) => api
-  .post('token', {}, { headers: { Authorization: token } })
+export const getSaleByPk = async (id, token) => api
+  .get(`sale/:${id}`, {}, { headers: { Authorization: token } })
   .catch((error) => error.response.data);
 
 export default api;

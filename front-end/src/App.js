@@ -5,8 +5,7 @@ import Login from './pages/login';
 import Products from './pages/products';
 import Register from './pages/register';
 import Checkout from './pages/checkout';
-import Orders from './pages/orders';
-import OrdersDetails from './pages/order_details';
+import OrdersDetails from './pages/orderDetails';
 
 export default function App() {
   return (
@@ -18,9 +17,8 @@ export default function App() {
         </Route>
         <Route path="/customer/products" component={ Products } />
         <Route path="/customer/checkout" component={ Checkout } />
-        <Route path="/customer/orders" component={ Orders } />
-        <Route path="/register" component={ Register } />
         <Route path="/customer/orders/:id" component={ OrdersDetails } />
+        <Route path="/register" component={ Register } />
       </Switch>
     </div>
   );

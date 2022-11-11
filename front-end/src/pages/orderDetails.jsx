@@ -1,5 +1,6 @@
 import React from 'react';
 import NavBar from '../components/navbar';
+import TableDetails from '../components/tableDetails';
 
 export default function OrdersDetails() {
   return (
@@ -7,7 +8,8 @@ export default function OrdersDetails() {
       <main>
         <NavBar />
       </main>
-      <p> DETALHES DO PEDIDO </p>
+      <h3>Detalhe do Pedido</h3>
+      <TableDetails />
     </>
 
   );
