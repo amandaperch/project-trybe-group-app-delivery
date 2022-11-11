@@ -25,7 +25,7 @@ export const createSale = async ({ totalPrice, deliveryAddress, deliveryNumber,
   .catch((error) => error.response.data);
 
 export const getSaleByPk = async (id, token) => api
-  .get(`sale/:${id}`, {}, { headers: { Authorization: token } })
+  .get(`sale/${id}`, {}, { headers: { Authorization: token } })
   .catch((error) => error.response.data);
 
 export default api;
