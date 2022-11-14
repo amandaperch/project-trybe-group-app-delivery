@@ -10,6 +10,20 @@ export default function Login() {
 
   const regex = /\S+@\S+\.\S+/;
   const minLengthPass = 5;
+
+  // const getRoute = (role) => {
+  //   switch (role) {
+  //   case 'seller':
+  //     history.push('/seller/orders');
+  //     break;
+  //   case 'administrator':
+  //     history.push('/administrator/products');
+  //     break;
+  //   default:
+  //     history.push('/customer/products');
+  //   }
+  // };
+
   return (
     <main>
       <form>
@@ -43,6 +57,7 @@ export default function Login() {
                 const response = await loginUser({ email, password });
                 const { data } = response;
                 console.log('RESPONSE.DATA', data);
+                console.log('ROLE FROM DATA:', data.role);
                 localStorage.setItem('user', JSON.stringify(data));
                 if ('message' in response) {
                   setErrorMessage(response.message);
