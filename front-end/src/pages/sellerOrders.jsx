@@ -1,22 +1,48 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import api from '../helpers/api';
+import { getSalesBySeller } from '../helpers/api';
 import NavBar from '../components/navbar';
 
 export default function SellerOrders() {
+  const [seller, setSeller] = useState({});
   const [sales, setSales] = useState([]);
+
+  useEffect(() => {
+    function getSeller() {
+      try {
+        if (localStorage.getItem('user') === null) {
+          localStorage.setItem('user', JSON.stringify({}));
+        } else {
+          setSeller(JSON.parse(localStorage.getItem('user')));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    getSeller();
+  }, []);
 
   useEffect(() => {
     async function getSales() {
       try {
-        const res = await api.get('/salesAll');
-        setSales(res.data);
+        if (seller.id) {
+          console.log('SELLERID', seller.id);
+
+          const { data } = await getSalesBySeller({
+            sellerId: seller.id,
+            token: seller.token,
+          });
+
+          console.log('DATA NA SELLER ORDERS', data);
+          setSales(data);
+        }
       } catch (error) {
         console.log(error);
       }
     }
     getSales();
-  }, []);
+  }, [seller.id, seller.token]);
 
   return (
     <>

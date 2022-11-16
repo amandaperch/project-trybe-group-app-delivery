@@ -11,18 +11,18 @@ export default function Login() {
   const regex = /\S+@\S+\.\S+/;
   const minLengthPass = 5;
 
-  // const getRoute = (role) => {
-  //   switch (role) {
-  //   case 'seller':
-  //     history.push('/seller/orders');
-  //     break;
-  //   case 'administrator':
-  //     history.push('/administrator/products');
-  //     break;
-  //   default:
-  //     history.push('/customer/products');
-  //   }
-  // };
+  const getRoute = (role) => {
+    switch (role) {
+    case 'seller':
+      history.push('/seller/orders');
+      break;
+    case 'administrator':
+      history.push('/administrator/products');
+      break;
+    default:
+      history.push('/customer/products');
+    }
+  };
 
   return (
     <main>
@@ -56,14 +56,20 @@ export default function Login() {
                 e.preventDefault();
                 const response = await loginUser({ email, password });
                 const { data } = response;
-                console.log('RESPONSE.DATA', data);
-                console.log('ROLE FROM DATA:', data.role);
-                localStorage.setItem('user', JSON.stringify(data));
-                if ('message' in response) {
+                if (data !== undefined) {
+                  console.log('RESPONSE.DATA', data);
+                  console.log('ROLE FROM DATA:', data.role);
+                  localStorage.setItem('user', JSON.stringify(data));
+                }
+                console.log('RESPONSE.MESSAGE', response.message);
+                if ('message' in response || data === undefined) {
                   setErrorMessage(response.message);
                   return null;
                 }
-                history.push('/customer/products');
+                if (data !== undefined) {
+                  getRoute(data.role);
+                }
+                // history.push('/customer/products');
               }
             ) }
             disabled={ !(password.length > minLengthPass && regex.test(email)) }

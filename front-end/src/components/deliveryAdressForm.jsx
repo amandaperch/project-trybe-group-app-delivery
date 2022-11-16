@@ -103,7 +103,7 @@ export default function DeliveryAdressForm() {
                 itemsList,
                 token: user.token });
               const { data } = response;
-              console.log('RESPONSE.DATA', data.data);
+              console.log('DA - RESPONSE.DATA', data.data);
               if ('message' in response) {
                 setErrorMessage(response.message);
                 return null;

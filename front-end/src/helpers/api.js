@@ -28,4 +28,8 @@ export const getSaleByPk = async (id, token) => api
   .get(`sale/${id}`, {}, { headers: { Authorization: token } })
   .catch((error) => error.response.data);
 
+export const getSalesBySeller = async (sellerId, token) => api
+  .post('sale/seller', sellerId, { headers: { Authorization: token } })
+  .catch((error) => error.response.data);
+
 export default api;

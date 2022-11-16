@@ -31,6 +31,20 @@ class SaleService {
     }
     return sale;
   }
+
+  static async getSalesBySellerId(sellerId) {
+    console.log('ENTREI NA SALE SERVICE e o SELLER ID é: ', sellerId);
+    const sales = await Sale.findAll({
+      where: { sellerId },
+    });
+
+    console.log('VENDAS POR VENDEDOR:', sales);
+
+    if (sales.length === 0) {
+      return { code: 404, message: 'venda(s) não encontrada(s)' };
+    }
+    return sales;
+  }
 }
 
 module.exports = SaleService;

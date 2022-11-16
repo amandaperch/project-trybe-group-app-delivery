@@ -145,9 +145,9 @@ export default function TableDetails() {
             ))}
           </table>
           <p data-testid="customer_order_details__element-order-total-price">
-            Total:
+            Total: R$
             {' '}
-            <span>{ totalPrice.toString().replace(/\./, ',') }</span>
+            <span>{ totalPrice.toFixed(2).toString().replace(/\./, ',') }</span>
           </p>
         </div>
       )

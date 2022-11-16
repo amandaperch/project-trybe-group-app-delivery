@@ -7,7 +7,6 @@ import api from '../helpers/api';
 export default function Products() {
   const [card, setCard] = useState([]);
   // const [subtotalCart, setSubtotalCart] = useState(0);
-  const [localStorangeCart, setLocalStorangeCart] = useState([]);
   const [cartState, setCartState] = useState([]);
 
   useEffect(() => {
@@ -44,30 +43,16 @@ export default function Products() {
   const history = useHistory();
 
   useEffect(() => {
-    async function localStorangeExists() {
-      try {
-        if (localStorage.getItem('carrinho') === null) {
-          localStorage.setItem('carrinho', JSON.stringify([]));
-        } else {
-          setLocalStorangeCart(JSON.parse(localStorage.getItem('carrinho')));
-        }
-      } catch (error) {
-        console.log(error);
-      }
+    if (localStorage.getItem('carrinho') === null) {
+      localStorage.setItem('carrinho', JSON.stringify([]));
     }
-    localStorangeExists();
   }, []);
-  console.log(localStorangeCart);
 
   function allPrice() {
     const totalPrice = cartState
       .reduce((acc, curr) => (acc) + (curr.subTotal), 0);
     return totalPrice;
   }
-
-  // const localStorageCart = JSON.parse(localStorage.getItem('carrinho'));
-  // const totalPrice = localStorangeCart
-  //   .reduce((acc, curr) => (acc) + (curr.quantity * curr.subTotal), 0);
 
   return (
     <>
