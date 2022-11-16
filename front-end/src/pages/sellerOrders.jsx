@@ -52,23 +52,23 @@ export default function SellerOrders() {
       <div>
         {sales.map((item) => (
           <div key={ item.id }>
-            <Link to={ `/customer/orders/${item.id}` }>
-              <p data-testid={ `customer_orders__element-order-id-${item.id}` }>
+            <Link to={ `/seller/orders/${item.id}` }>
+              <p data-testid={ `seller_orders__element-order-id-${item.id}` }>
                 {
                   item.id
                 }
               </p>
-              <p data-testid={ `customer_orders__element-delivery-status-${item.id}` }>
+              <p data-testid={ `seller_orders__element-delivery-status-${item.id}` }>
                 {
                   item.status
                 }
               </p>
-              <p data-tesid={ `customer_orders__element-order-date-${item.id}` }>
+              <p data-tesid={ `seller_orders__element-order-date-${item.id}` }>
                 {
                   item.saleDate
                 }
               </p>
-              <p data-tesid={ `customer_orders__element-card-price-${item.id}` }>
+              <p data-tesid={ `seller_orders__element-card-price-${item.id}` }>
                 {
                   item.totalPrice
                 }
