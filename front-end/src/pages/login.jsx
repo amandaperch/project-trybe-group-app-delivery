@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { loginUser } from '../helpers/api';
 
@@ -7,6 +7,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const history = useHistory();
+  const [user, setUser] = useState({});
 
   const regex = /\S+@\S+\.\S+/;
   const minLengthPass = 5;
@@ -23,6 +24,24 @@ export default function Login() {
       history.push('/customer/products');
     }
   };
+
+  useEffect(() => {
+    const getUser = () => {
+      try {
+        if (localStorage.getItem('user') === null) {
+          localStorage.setItem('user', JSON.stringify({}));
+        } else {
+          setUser(JSON.parse(localStorage.getItem('user')));
+        }
+        if (user.role) {
+          getRoute(user.role);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getUser();
+  }, []);
 
   return (
     <main>
@@ -69,6 +88,8 @@ export default function Login() {
                 if (data !== undefined) {
                   getRoute(data.role);
                 }
+                // if (userLocal) { history.push('/customer/products'); }
+                // console.log('UserLocal linha76', userLocal);
                 // history.push('/customer/products');
               }
             ) }
