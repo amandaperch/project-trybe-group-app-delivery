@@ -42,8 +42,8 @@ export default function TableDetailsSeller() {
     return sumTotal;
   }, 0);
 
-  const dataSeller = 'customer_order_details__element-order-details-label-seller-name';
-  const dataDate = 'customer_order_details__element-order-details-label-order-date';
+  const dataDate = 'seller_order_details__element-order-details-label-order-date';
+  const dataStatus = 'seller_order_details__element-order-details-label-delivery-status';
 
   console.log('TOTAL PRICE NA TABLE DETAILS: ', totalPrice);
   return (
@@ -53,18 +53,13 @@ export default function TableDetailsSeller() {
           <header>
             <p>
               <span
-                datatestid="customer_order_details__element-order-details-label-order-id"
+                data-testid="seller_order_details__element-order-details-label-order-id"
               >
-                {`PEDIDO ${id}; `}
+                {`PEDIDO ${id} `}
 
               </span>
               <span
-                datatestid={ dataSeller }
-              >
-                {`P. Vend: ${saleData.sellers.name} `}
-              </span>
-              <span
-                datatestid={ dataDate }
+                data-testid={ dataDate }
               >
                 <span>{`${saleData.saleDate.split('T')[0].split('-')[2]}/`}</span>
                 <span>{`${saleData.saleDate.split('T')[0].split('-')[1]}/`}</span>
@@ -74,19 +69,24 @@ export default function TableDetailsSeller() {
                 </span>
               </span>
               <span
-                datatestid={
-                  `customer_order_details__element-order-details-label
-                  -delivery-status${id}`
-                }
+                data-testid={ dataStatus }
+
               >
-                {saleData.status.toUpperCase()}
+                {saleData.status}
                 {' '}
               </span>
               <button
-                datatestid="customer_order_details__button-delivery-check"
+                data-testid="seller_order_details__button-preparing-check"
                 type="button"
               >
-                MARCAR COMO ENTREGUE
+                PREPARAR PEDIDO
+              </button>
+              <button
+                disabled="true"
+                data-testid="seller_order_details__button-dispatch-check"
+                type="button"
+              >
+                SAIU PARA ENTREGA
               </button>
             </p>
           </header>
@@ -103,14 +103,14 @@ export default function TableDetailsSeller() {
               <tr key={ index }>
                 <td
                   data-testid={
-                    `customer_order_details__element-order-table-item-number-${index}`
+                    `cseller_order_details__element-order-table-item-number-${index}`
                   }
                 >
                   {index + 1}
                 </td>
                 <td
                   data-testid={
-                    `customer_order_details__element-order-table-name-${index}`
+                    `seller_order_details__element-order-table-name-${index}`
                   }
                 >
                   {item.name}
@@ -118,7 +118,7 @@ export default function TableDetailsSeller() {
                 </td>
                 <td
                   data-testid={
-                    `customer_order_details__element-order-table-quantity-${index}`
+                    `seller_order_details__element-order-table-quantity-${index}`
                   }
                 >
                   {item.SaleProduct.quantity}
@@ -126,7 +126,7 @@ export default function TableDetailsSeller() {
                 </td>
                 <td
                   data-testid={
-                    `customer_order_details__element-order-table-unit-price-${index}`
+                    `seller_order_details__element-order-table-unit-price-${index}`
                   }
                 >
                   { (Number(item.price).toFixed(2)).replace(/\./, ',') }
@@ -134,7 +134,7 @@ export default function TableDetailsSeller() {
                 </td>
                 <td
                   data-testid={
-                    `customer_order_details__element-order-table-sub-total-${index}`
+                    `seller_order_details__element-order-table-sub-total-${index}`
                   }
                 >
                   { ((item.SaleProduct.quantity * item.price).toFixed(2))
@@ -144,7 +144,7 @@ export default function TableDetailsSeller() {
               </tr>
             ))}
           </table>
-          <p data-testid="customer_order_details__element-order-total-price">
+          <p data-testid="seller_order_details__element-order-total-price">
             Total: R$
             {' '}
             <span>{ totalPrice.toFixed(2).toString().replace(/\./, ',') }</span>
