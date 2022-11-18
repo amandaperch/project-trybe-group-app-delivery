@@ -53,18 +53,18 @@ export default function TableDetails() {
           <header>
             <p>
               <span
-                datatestid="customer_order_details__element-order-details-label-order-id"
+                data-tesid="customer_order_details__element-order-details-label-order-id"
               >
                 {`PEDIDO ${id}; `}
 
               </span>
               <span
-                datatestid={ dataSeller }
+                data-tesid={ dataSeller }
               >
                 {`P. Vend: ${saleData.sellers.name} `}
               </span>
               <span
-                datatestid={ dataDate }
+                data-tesid={ dataDate }
               >
                 <span>{`${saleData.saleDate.split('T')[0].split('-')[2]}/`}</span>
                 <span>{`${saleData.saleDate.split('T')[0].split('-')[1]}/`}</span>
@@ -74,7 +74,7 @@ export default function TableDetails() {
                 </span>
               </span>
               <span
-                datatestid={
+                data-tesid={
                   `customer_order_details__element-order-details-label
                   -delivery-status${id}`
                 }
@@ -83,7 +83,7 @@ export default function TableDetails() {
                 {' '}
               </span>
               <button
-                datatestid="customer_order_details__button-delivery-check"
+                data-tesid="customer_order_details__button-delivery-check"
                 type="button"
               >
                 MARCAR COMO ENTREGUE
@@ -100,48 +100,50 @@ export default function TableDetails() {
               </tr>
             </thead>
             {itemsList.map((item, index) => (
-              <tr key={ index }>
-                <td
-                  data-testid={
-                    `customer_order_details__element-order-table-item-number-${index}`
-                  }
-                >
-                  {index + 1}
-                </td>
-                <td
-                  data-testid={
-                    `customer_order_details__element-order-table-name-${index}`
-                  }
-                >
-                  {item.name}
+              <div key={ index }>
+                <tr>
+                  <td
+                    data-testid={
+                      `customer_order_details__element-order-table-item-number-${index}`
+                    }
+                  >
+                    {index + 1}
+                  </td>
+                  <td
+                    data-testid={
+                      `customer_order_details__element-order-table-name-${index}`
+                    }
+                  >
+                    {item.name}
 
-                </td>
-                <td
-                  data-testid={
-                    `customer_order_details__element-order-table-quantity-${index}`
-                  }
-                >
-                  {item.SaleProduct.quantity}
+                  </td>
+                  <td
+                    data-testid={
+                      `customer_order_details__element-order-table-quantity-${index}`
+                    }
+                  >
+                    {item.SaleProduct.quantity}
 
-                </td>
-                <td
-                  data-testid={
-                    `customer_order_details__element-order-table-unit-price-${index}`
-                  }
-                >
-                  { (Number(item.price).toFixed(2)).replace(/\./, ',') }
+                  </td>
+                  <td
+                    data-testid={
+                      `customer_order_details__element-order-table-unit-price-${index}`
+                    }
+                  >
+                    { (Number(item.price).toFixed(2)).replace(/\./, ',') }
 
-                </td>
-                <td
-                  data-testid={
-                    `customer_order_details__element-order-table-sub-total-${index}`
-                  }
-                >
-                  { ((item.SaleProduct.quantity * item.price).toFixed(2))
-                    .replace(/\./, ',') }
+                  </td>
+                  <td
+                    data-testid={
+                      `customer_order_details__element-order-table-sub-total-${index}`
+                    }
+                  >
+                    { ((item.SaleProduct.quantity * item.price).toFixed(2))
+                      .replace(/\./, ',') }
 
-                </td>
-              </tr>
+                  </td>
+                </tr>
+              </div>
             ))}
           </table>
           <p data-testid="customer_order_details__element-order-total-price">

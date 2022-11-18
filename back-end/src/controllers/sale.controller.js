@@ -2,7 +2,7 @@ const SalesService = require('../services/sale.service');
 
 class SalesController {
  static async getAll(_req, res) {
- const sale = await SalesService.getAll();
+  const sale = await SalesService.getAll();
   return res.status(200).json(sale);
  }
 

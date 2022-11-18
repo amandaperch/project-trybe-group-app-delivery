@@ -6,6 +6,7 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
   const history = useHistory();
   const [user, setUser] = useState({});
 
@@ -87,6 +88,9 @@ export default function Login() {
                 if (data !== undefined) {
                   getRoute(data.role);
                 }
+                // if (setUser) {
+                //   <Redirect to="/customer/products" />;
+                // }
                 // history.push('/customer/products');
               }
             ) }
