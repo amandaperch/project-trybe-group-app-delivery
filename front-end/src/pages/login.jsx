@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { loginUser } from '../helpers/api';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
   const history = useHistory();
 
   const regex = /\S+@\S+\.\S+/;
@@ -42,6 +42,25 @@ export default function Login() {
     };
     getUser();
   }, []);
+
+  // useEffect(() => {
+  //   const getRoute = (role) => {
+  //     switch (role) {
+  //     case 'seller':
+  //       setUser(history.push('/seller/orders'));
+  //       break;
+  //     case 'administrator':
+  //       setUser(history.push('/administrator/products'));
+  //       break;
+  //     case 'customer':
+  //       setUser(history.push('/customer/products'));
+  //       break;
+  //     default:
+  //       setUser(history.push('/login'));
+  //     }
+  //   };
+  //   getRoute();
+  // }, []);
 
   console.log(setUser);
 
@@ -90,9 +109,9 @@ export default function Login() {
                 if (data !== undefined) {
                   getRoute(data.role);
                 }
-                if (setUser) {
-                  <Redirect to="/customer/products" />;
-                }
+                // if (setUser) {
+                //   <Redirect to="/customer/products" />;
+                // }
                 // history.push('/customer/products');
               }
             ) }
