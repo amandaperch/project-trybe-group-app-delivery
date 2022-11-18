@@ -28,9 +28,7 @@ export default function Login() {
   useEffect(() => {
     const getUser = () => {
       try {
-        if (localStorage.getItem('user') === null) {
-          localStorage.setItem('user', JSON.stringify({}));
-        } else {
+        if (localStorage.getItem('user')) {
           setUser(JSON.parse(localStorage.getItem('user')));
         }
         if (user.role) {
