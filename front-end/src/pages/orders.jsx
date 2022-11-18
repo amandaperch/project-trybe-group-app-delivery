@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 import api from '../helpers/api';
 import NavBar from '../components/navbar';
 
@@ -10,8 +11,8 @@ export default function Orders() {
   useEffect(() => {
     async function getSales() {
       try {
-        const res = await api.get('/saleAll');
-        setSales(res.data);
+        const { data } = await api.get('/saleAll');
+        setSales(data);
       } catch (error) {
         console.log(error);
       }
@@ -25,41 +26,33 @@ export default function Orders() {
         <NavBar />
       </main>
       <div>
-        {sales.map((item) => (
+        {sales.map((order) => (
           <div
-            key={ item.id }
+            key={ order.id }
           >
             <Link
-              to={ `/customer/orders/${item.id}` }
+              to={ `/customer/orders/${order.id}` }
             >
-              <span data-testid={ `customer_orders__element-order-id-${item.saleId}` }>
+              <span data-testid={ `customer_orders__element-order-id-${order.id}` }>
                 {
-                  item.id
+                  `Pedido ${order.id}`
                 }
               </span>
               <span
-                data-testid={ `customer_orders__element
-              -delivery-status-${item.saleId}` }
+                data-testid={ `customer_orders__element-delivery-status-${order.id}` }
               >
                 {
-                  item.status
+                  order.status
                 }
               </span>
-              <span data-tesid={ `customer_orders__element-order-date-${item.saleId}` }>
-                <span>{`${item.saleDate.split('T')[0].split('-')[2]}/`}</span>
-                <span>{`${item.saleDate.split('T')[0].split('-')[1]}/`}</span>
-                <span>
-                  {item.saleDate.split('T')[0].split('-')[0]}
-                  {' '}
-                </span>
-
+              <span data-testid={ `customer_orders__element-order-date-${order.id}` }>
                 {
-                  item.saleDate
+                  moment(order.saleDate).format('DD/MM/YYYY')
                 }
               </span>
-              <span data-tesid={ `customer_orders__element-card-price-${item.saleId}` }>
+              <span data-testid={ `customer_orders__element-card-price-${order.id}` }>
                 {
-                  item.totalPrice
+                  `R$ ${order.totalPrice.replace('.', ',')}`
                 }
               </span>
             </Link>
