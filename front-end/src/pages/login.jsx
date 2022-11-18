@@ -42,7 +42,7 @@ export default function Login() {
       }
     };
     getUser();
-  }, [user]);
+  }, [user.role]);
 
   return (
     <main>
