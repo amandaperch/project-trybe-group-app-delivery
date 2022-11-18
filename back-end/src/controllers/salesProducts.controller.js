@@ -12,6 +12,7 @@ class SalesProductsController {
   if ('code' in userToken) {
     return res.status(userToken.code).json(userToken.message);
   }
+  console.log('REQ BODY SALEPRODUCTCONTROOLER:', req.body);
   const sale = await SalesProductsService.insert(req.body);
   return res.status(201).json(sale);
  }

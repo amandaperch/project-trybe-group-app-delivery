@@ -5,6 +5,7 @@ class saleProductService {
    static async insert({ totalPrice, deliveryAddress, deliveryNumber,
     userId, sellerId, itemsList }) {
       try {
+        console.log('USEREID NA SALESPRODUCTSSERVICE:', userId);
       const result = await sequelize.transaction(async (t) => {
         const sale = await Sale.create({ 
           totalPrice, deliveryAddress, deliveryNumber, userId, sellerId,
