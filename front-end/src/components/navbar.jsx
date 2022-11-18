@@ -32,7 +32,6 @@ export default function NavBar() {
           data-testid="customer_products__element-navbar-link-logout"
           onClick={ () => {
             localStorage.clear('user');
-            window.location.reload();
             history.push('/');
           } }
         >
