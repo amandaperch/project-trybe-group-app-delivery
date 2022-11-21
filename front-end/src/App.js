@@ -20,8 +20,8 @@ export default function App() {
         </Route>
         <Route path="/customer/products" component={ Products } />
         <Route path="/customer/checkout" component={ Checkout } />
-        <Route path="/customer/orders/" component={ Orders } />
         <Route path="/customer/orders/:id" component={ OrdersDetails } />
+        <Route path="/customer/orders" component={ Orders } />
         <Route path="/seller/orders/:id" component={ OrdersDetailsSeller } />
         <Route path="/seller/orders" component={ SellerOrders } />
         <Route path="/register" component={ Register } />
