@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { loginUser } from '../helpers/api';
 
@@ -7,9 +7,41 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const history = useHistory();
+  const [user, setUser] = useState({});
 
   const regex = /\S+@\S+\.\S+/;
   const minLengthPass = 5;
+
+  const getRoute = (role) => {
+    switch (role) {
+    case 'seller':
+      history.push('/seller/orders');
+      break;
+    case 'administrator':
+      history.push('/administrator/products');
+      break;
+    default:
+      history.push('/customer/products');
+    }
+  };
+
+  useEffect(() => {
+    const getUser = () => {
+      try {
+        if (localStorage.getItem('user')) {
+          setUser(JSON.parse(localStorage.getItem('user')));
+        }
+        if (user.role) {
+          console.log('USER.ROLE', user.role);
+          getRoute(user.role);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getUser();
+  }, [user.role]);
+
   return (
     <main>
       <form>
@@ -41,12 +73,20 @@ export default function Login() {
               async (e) => {
                 e.preventDefault();
                 const response = await loginUser({ email, password });
-                localStorage.setItem('user', JSON.stringify(response.data));
-                if ('message' in response) {
+                const { data } = response;
+                if (data !== undefined) {
+                  console.log('RESPONSE.DATA', data);
+                  console.log('ROLE FROM DATA:', data.role);
+                  localStorage.setItem('user', JSON.stringify(data));
+                }
+                console.log('RESPONSE.MESSAGE', response.message);
+                if ('message' in response || data === undefined) {
                   setErrorMessage(response.message);
                   return null;
                 }
-                history.push('/customer/products');
+                if (data !== undefined) {
+                  getRoute(data.role);
+                }
               }
             ) }
             disabled={ !(password.length > minLengthPass && regex.test(email)) }

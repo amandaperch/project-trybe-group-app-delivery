@@ -5,12 +5,18 @@ module.exports = (sequelize, DataTypes) => {
       quantity: {
         allowNull: false,
         type: DataTypes.INTEGER
-      }
+      },
+      saleId: {
+        type: DataTypes.INTEGER
+    },
+      productId: {
+        type: DataTypes.INTEGER
+      },
     },
     {
       timestamps: false,
       underscored: true, 
-      tableName: 'salesProducts'
+      tableName: 'sales_products'
     },
   );
   SaleProduct.associate = (models) => {

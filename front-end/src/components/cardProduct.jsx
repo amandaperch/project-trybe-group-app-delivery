@@ -1,25 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 export default function CardProduct({ value, state }) {
   const [quantity, setQuantity] = useState(0);
   const { id, name, price } = value;
   const [cartState, setCartState] = state;
-
-  useEffect(() => {
-    async function localStorangeExists() {
-      try {
-        if (localStorage.getItem('carrinho') === null) {
-          localStorage.setItem('carrinho', JSON.stringify([]));
-        } else {
-          setLocalStorangeCart(JSON.parse(localStorage.getItem('carrinho')));
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    localStorangeExists();
-  }, []);
 
   const remove = () => {
     setQuantity((prev) => {
@@ -35,15 +20,39 @@ export default function CardProduct({ value, state }) {
         }
         return item;
       });
-      localStorage.setItem('carrinho', JSON.stringify(newCart));
-      setCartState(newCart);
+      const newList = newCart.filter((item) => item.quantity > 0);
+      localStorage.setItem('carrinho', JSON.stringify(newList));
+      setCartState(newList);
+    }
+  };
+
+  const typeQuantity = (qty) => {
+    const product = { id,
+      name,
+      price,
+      quantity: Number(qty),
+      subTotal: Number((qty * price).toFixed(2)) };
+    if (cartState.find((item) => item.id === id)) {
+      const newCart = cartState.map((item) => {
+        if (item.id === id) {
+          return { ...item,
+            quantity: Number(qty),
+            subTotal: Number((Number(item.price) * Number(qty)).toFixed(2)) };
+        }
+        return item;
+      });
+      const newList = newCart.filter((item) => item.quantity > 0);
+      localStorage.setItem('carrinho', JSON.stringify(newList));
+      setCartState(newList);
+    } else {
+      const newList = [...cartState, product].filter((item) => item.quantity > 0);
+      setCartState(newList);
+      localStorage.setItem('carrinho', JSON.stringify(newList));
     }
   };
 
   const addToCart = () => {
-    const cart = JSON.parse(localStorage.getItem('carrinho')) || [];
     const product = { id, name, price, quantity: 1, subTotal: Number(price) };
-    console.log('cartstate', cartState);
     if (cartState.find((item) => item.id === id)) {
       const newCart = cartState.map((item) => {
         if (item.id === id) {
@@ -56,23 +65,11 @@ export default function CardProduct({ value, state }) {
       localStorage.setItem('carrinho', JSON
         .stringify(newCart));
       setCartState(newCart);
-      console.log(newCart);
     } else {
       setCartState([...cartState, product]);
-      localStorage.setItem('carrinho', JSON.stringify(cart));
-      // setLocalStorangeCart(cart);
+      localStorage.setItem('carrinho', JSON.stringify([...cartState, product]));
     }
   };
-
-  // const handleQuantity = ({ target }) => {
-  //   setQuantity(target.value);
-  //   const product = { id, name, price, subTotal: Number(price) };
-  //   const itemThere = product.some((item) => item.id === id);
-  //   if (itemThere) {
-  //     const newCart = cartState.filter((item) => item.id !== id);
-  //     setCartState(newCart);
-  //   }
-  // };
 
   return (
     <div>
@@ -104,8 +101,12 @@ export default function CardProduct({ value, state }) {
           <label htmlFor="qte">
             <input
               type="number"
+              placeholder="0"
               value={ quantity }
-              onChange={ () => { setQuantity((prev) => Number(prev) + 1); addToCart(); } }
+              onChange={ (e) => {
+                setQuantity(Number(e.target.value));
+                typeQuantity(e.target.value);
+              } }
               min={ 0 }
               data-testid={ `customer_products__input-card-quantity-${value.id}` }
             />
