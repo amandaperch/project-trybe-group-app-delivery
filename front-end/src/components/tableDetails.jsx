@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getSaleByPk } from '../helpers/api';
+import { getSaleByPk, updateOrder } from '../helpers/api';
 
 export default function TableDetails() {
   const [itemsList, setItemList] = useState([]);
@@ -83,8 +83,12 @@ export default function TableDetails() {
                 {' '}
               </span>
               <button
-                data-tesid="customer_order_details__button-delivery-check"
                 type="button"
+                data-tesid="customer_order_details__button-delivery-check"
+                disabled={ saleData.status !== 'Preparando' }
+                onClick={ async () => {
+                  await updateOrder({ saleId: id, newStatus: 'Entregue' });
+                } }
               >
                 MARCAR COMO ENTREGUE
               </button>

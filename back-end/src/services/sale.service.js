@@ -45,6 +45,14 @@ class SaleService {
     }
     return sales;
   }
+
+  static async updateStatus({ saleId, newStatus }) {
+    console.log('SALEID NA SALE SERVICE', saleId);
+    const sale = await Sale.update({ status: newStatus }, {
+      where: { id: saleId },
+    });
+    return sale;
+  }
 }
 
 module.exports = SaleService;

@@ -35,4 +35,7 @@ export const getSalesBySeller = async (sellerId, token) => api
   .post('sale/seller', sellerId, { headers: { Authorization: token } })
   .catch((error) => error.response.data);
 
+export const updateOrder = async ({ saleId, newStatus }) => api
+  .patch('sale/update', { saleId, newStatus }, { headers: { Authorization: '' } });
+
 export default api;
