@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
-import { getSaleByPk } from '../helpers/api';
+import { getSaleByPk, updateOrder } from '../helpers/api';
 
 export default function TableDetails() {
   const [itemsList, setItemList] = useState([]);
@@ -10,6 +10,17 @@ export default function TableDetails() {
   const tableTitles = ['Item', 'Descrição', 'Quantidade',
     'Valor Unitário', 'Sub-total'];
   const { id } = useParams();
+
+  async function getSale() {
+    try {
+      const { data } = await getSaleByPk(id, user.token);
+      setSaleData(data);
+      console.log('DATA DETAIL: ', data);
+      setItemList(data.products);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const getUser = () => {
     try {
@@ -24,16 +35,6 @@ export default function TableDetails() {
   };
 
   useEffect(() => {
-    async function getSale() {
-      try {
-        const { data } = await getSaleByPk(id, user.token);
-        setSaleData(data);
-        console.log('DATA DETAIL: ', data);
-        setItemList(data.products);
-      } catch (error) {
-        console.log(error);
-      }
-    }
     getSale();
     getUser();
   }, []);
@@ -46,7 +47,7 @@ export default function TableDetails() {
   const dataSeller = 'customer_order_details__element-order-details-label-seller-name';
   const dataDate = 'customer_order_details__element-order-details-label-order-date';
   const dataStat = 'customer_order_details__element-order-details-label-delivery-status';
-  const dataButt = 'customer_order_details__button-delivery-check';
+  // const dataButt = 'customer_order_details__button-delivery-check';
 
   console.log('TOTAL PRICE NA TABLE DETAILS: ', totalPrice);
   return (
@@ -75,9 +76,13 @@ export default function TableDetails() {
                 {saleData.status}
               </span>
               <button
-                data-testid={ dataButt }
                 type="button"
-                disabled=" desabilitado "
+                data-testid="customer_order_details__button-delivery-check"
+                disabled={ saleData.status !== 'Em Trânsito' }
+                onClick={ async () => {
+                  await updateOrder({ saleId: id, newStatus: 'Entregue' });
+                  getSale();
+                } }
               >
                 MARCAR COMO ENTREGUE
               </button>

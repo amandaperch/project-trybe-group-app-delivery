@@ -1,14 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { getSaleByPk } from '../helpers/api';
+import { getSaleByPk, updateOrder } from '../helpers/api';
 
 export default function TableDetailsSeller() {
   const [itemsList, setItemList] = useState([]);
   const [user, setUser] = useState('');
   const [saleData, setSaleData] = useState({});
+  // const [isDisabled, setIsDisabled] = useState(true);
   const tableTitles = ['Item', 'Descrição', 'Quantidade',
     'Valor Unitário', 'Sub-total'];
   const { id } = useParams();
+
+  async function getSale() {
+    try {
+      const { data } = await getSaleByPk(id, user.token);
+      setSaleData(data);
+      console.log('DATA DETAIL: ', data);
+      setItemList(data.products);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const getUser = () => {
     try {
@@ -23,16 +35,6 @@ export default function TableDetailsSeller() {
   };
 
   useEffect(() => {
-    async function getSale() {
-      try {
-        const { data } = await getSaleByPk(id, user.token);
-        setSaleData(data);
-        console.log('DATA DETAIL: ', data);
-        setItemList(data.products);
-      } catch (error) {
-        console.log(error);
-      }
-    }
     getSale();
     getUser();
   }, []);
@@ -78,13 +80,22 @@ export default function TableDetailsSeller() {
               <button
                 data-testid="seller_order_details__button-preparing-check"
                 type="button"
+                disabled={ saleData.status !== 'Pendente' }
+                onClick={ async () => {
+                  await updateOrder({ saleId: id, newStatus: 'Preparando' });
+                  getSale();
+                } }
               >
                 PREPARAR PEDIDO
               </button>
               <button
-                disabled="true"
-                data-testid="seller_order_details__button-dispatch-check"
                 type="button"
+                data-testid="seller_order_details__button-dispatch-check"
+                disabled={ saleData.status !== 'Preparando' }
+                onClick={ async () => {
+                  await updateOrder({ saleId: id, newStatus: 'Em Trânsito' });
+                  getSale();
+                } }
               >
                 SAIU PARA ENTREGA
               </button>

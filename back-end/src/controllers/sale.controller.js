@@ -25,6 +25,12 @@ static async getSalesBySellerId(req, res) {
   }
   return res.status(200).json(sales);
 }
+
+static async updateStatus(req, res) {
+  const { saleId, newStatus } = req.body;
+  const sale = await SalesService.updateStatus({ saleId, newStatus });
+  return res.status(200).json(sale);
+}
 }
 
 module.exports = SalesController;
