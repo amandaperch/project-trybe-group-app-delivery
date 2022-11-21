@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import moment from 'moment';
 import { getSaleByPk, updateOrder } from '../helpers/api';
 
 export default function TableDetails() {
@@ -44,6 +45,8 @@ export default function TableDetails() {
 
   const dataSeller = 'customer_order_details__element-order-details-label-seller-name';
   const dataDate = 'customer_order_details__element-order-details-label-order-date';
+  const dataStat = 'customer_order_details__element-order-details-label-delivery-status';
+  // const dataButt = 'customer_order_details__button-delivery-check';
 
   console.log('TOTAL PRICE NA TABLE DETAILS: ', totalPrice);
   return (
@@ -53,34 +56,23 @@ export default function TableDetails() {
           <header>
             <p>
               <span
-                data-tesid="customer_order_details__element-order-details-label-order-id"
+                data-testid="customer_order_details__element-order-details-label-order-id"
               >
                 {`PEDIDO ${id}; `}
 
               </span>
               <span
-                data-tesid={ dataSeller }
+                data-testid={ dataSeller }
               >
                 {`P. Vend: ${saleData.sellers.name} `}
               </span>
-              <span
-                data-tesid={ dataDate }
-              >
-                <span>{`${saleData.saleDate.split('T')[0].split('-')[2]}/`}</span>
-                <span>{`${saleData.saleDate.split('T')[0].split('-')[1]}/`}</span>
-                <span>
-                  {saleData.saleDate.split('T')[0].split('-')[0]}
-                  {' '}
-                </span>
+              <span data-testid={ dataDate }>
+                { moment(saleData.saleDate).format('DD/MM/YYYY')}
               </span>
               <span
-                data-tesid={
-                  `customer_order_details__element-order-details-label
-                  -delivery-status${id}`
-                }
+                data-testid={ dataStat }
               >
-                {saleData.status.toUpperCase()}
-                {' '}
+                {saleData.status}
               </span>
               <button
                 type="button"
