@@ -11,6 +11,17 @@ export default function TableDetails() {
     'Valor Unitário', 'Sub-total'];
   const { id } = useParams();
 
+  async function getSale() {
+    try {
+      const { data } = await getSaleByPk(id, user.token);
+      setSaleData(data);
+      console.log('DATA DETAIL: ', data);
+      setItemList(data.products);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const getUser = () => {
     try {
       if (localStorage.getItem('user') === null) {
@@ -24,16 +35,6 @@ export default function TableDetails() {
   };
 
   useEffect(() => {
-    async function getSale() {
-      try {
-        const { data } = await getSaleByPk(id, user.token);
-        setSaleData(data);
-        console.log('DATA DETAIL: ', data);
-        setItemList(data.products);
-      } catch (error) {
-        console.log(error);
-      }
-    }
     getSale();
     getUser();
   }, []);
@@ -76,10 +77,11 @@ export default function TableDetails() {
               </span>
               <button
                 type="button"
-                data-tesid="customer_order_details__button-delivery-check"
-                disabled={ saleData.status !== 'Preparando' }
+                data-testid="customer_order_details__button-delivery-check"
+                disabled={ saleData.status !== 'Em Trânsito' }
                 onClick={ async () => {
                   await updateOrder({ saleId: id, newStatus: 'Entregue' });
+                  getSale();
                 } }
               >
                 MARCAR COMO ENTREGUE

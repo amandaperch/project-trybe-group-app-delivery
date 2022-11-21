@@ -11,6 +11,17 @@ export default function TableDetailsSeller() {
     'Valor Unitário', 'Sub-total'];
   const { id } = useParams();
 
+  async function getSale() {
+    try {
+      const { data } = await getSaleByPk(id, user.token);
+      setSaleData(data);
+      console.log('DATA DETAIL: ', data);
+      setItemList(data.products);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const getUser = () => {
     try {
       if (localStorage.getItem('user') === null) {
@@ -24,16 +35,6 @@ export default function TableDetailsSeller() {
   };
 
   useEffect(() => {
-    async function getSale() {
-      try {
-        const { data } = await getSaleByPk(id, user.token);
-        setSaleData(data);
-        console.log('DATA DETAIL: ', data);
-        setItemList(data.products);
-      } catch (error) {
-        console.log(error);
-      }
-    }
     getSale();
     getUser();
   }, []);
@@ -82,6 +83,7 @@ export default function TableDetailsSeller() {
                 disabled={ saleData.status !== 'Pendente' }
                 onClick={ async () => {
                   await updateOrder({ saleId: id, newStatus: 'Preparando' });
+                  getSale();
                 } }
               >
                 PREPARAR PEDIDO
@@ -92,6 +94,7 @@ export default function TableDetailsSeller() {
                 disabled={ saleData.status !== 'Preparando' }
                 onClick={ async () => {
                   await updateOrder({ saleId: id, newStatus: 'Em Trânsito' });
+                  getSale();
                 } }
               >
                 SAIU PARA ENTREGA
