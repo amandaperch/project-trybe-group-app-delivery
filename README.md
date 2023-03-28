@@ -24,7 +24,6 @@
 - Para cominicação usamos o slack.
 - Buscamos ter empatia com os colegas, pois estavamos em um período de entrevistas de emprego, ou já trabalhando, então tivemos que nos ajustar.
 - Apresentamos o projeto ao final do período de doze dias, no qual eu realizei slides via canva. 
-- Neste projeto em específico tive problemas com uma pessoa do time, no qual percebi que tive que ter controle emocional.
 
 ---
 ## Requisitos que serão realizados :pizza: :hamburger: :fries: :hotdog:
