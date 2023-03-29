@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://github.com/amandaperch/project-trybe-group-app-delivery/blob/main/img/App_Delivery_readme.png>
+<img src="https://github.com/amandaperch/project-trybe-group-app-delivery/blob/main/img/App_Delivery_readme.png"/>
 </p>
 
 ---
